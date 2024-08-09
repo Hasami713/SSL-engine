@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @ConfigurationProperties(prefix = "bot")
-public record BotConfig(String url) {
+public class BotConfig extends ClientConfig {
     @Bean
     public RestTemplate botClient() {
         return new RestTemplate();

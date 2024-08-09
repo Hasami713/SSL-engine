@@ -2,26 +2,29 @@ package ru.selfservicelaundry.engine.api;
 
 import java.net.URI;
 import java.util.Collections;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import ru.selfservicelaundry.engine.config.ClientConfig;
 import ru.selfservicelaundry.engine.config.ParserConfig;
 import ru.selfservicelaundry.engine.model.AvailableSlots;
 import ru.selfservicelaundry.engine.model.Laundries;
 import ru.selfservicelaundry.engine.model.Laundry;
 
-        @Component
-        @RequiredArgsConstructor
-public class ParserApiImpl implements ParserApi {
+@Component
+public class ParserApiImpl extends BaseApi implements ParserApi {
 
     private static final String LAUNDRIES_PATH = "api/v1/laundries";
     private static final String LAUNDRY_PATH = "api/v1/laundry";
 
-    private final ParserConfig parserConfig;
-    private final RestTemplate parserClient;
+    public ParserApiImpl(RestTemplate parserClient, ParserConfig parserConfig) {
+        super(parserClient, parserConfig);
+    }
+
 
     @Override
     public Laundries getLaundries() {
@@ -45,20 +48,6 @@ public class ParserApiImpl implements ParserApi {
         return getRequest(String.format("%s/%s/available", LAUNDRY_PATH, laundryId), null, AvailableSlots.class);
     }
 
-    private <T, Z> Z postRequest(String path, MultiValueMap<String, String> params, T body, Class<Z> clazz) {
-        return parserClient.getForObject(buildUrl(path, params), clazz);
-    }
 
-    private <T> T getRequest(String path, MultiValueMap<String, String> params, Class<T> clazz) {
-        return parserClient.getForObject(buildUrl(path, params), clazz);
-    }
 
-    private URI buildUrl(String path, MultiValueMap<String, String> params) {
-        return UriComponentsBuilder
-                .fromUriString(parserConfig.url()).path(path)
-                .queryParams(params)
-                .encode()
-                .build()
-                .toUri();
-    }
 }

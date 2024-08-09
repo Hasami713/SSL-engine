@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @ConfigurationProperties(prefix = "parser")
-public record ParserConfig(String url) {
+public class ParserConfig extends ClientConfig {
 
     @Bean
     public RestTemplate parserClient() {
