@@ -11,12 +11,13 @@ import ru.selfservicelaundry.engine.service.MetricsService;
 
 @Service
 @RequiredArgsConstructor
-    public class MetricsServiceImpl implements MetricsService {
+public class MetricsServiceImpl implements MetricsService {
 
     public static final String AVAILABILITY_METRIC = "availability";
 
     private final MeterRegistry meterRegistry;
     private final ParserApi parserApi;
+
     @PostConstruct
     public void init() {
     }

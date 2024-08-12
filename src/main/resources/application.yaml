@@ -9,7 +9,7 @@ parser:
   url: http://185.223.93.175:8091/
 
 bot:
-  url:
+  url: http://localhost:8090
 
 management:
   endpoints:
