@@ -45,6 +45,7 @@ public class ParserApiImpl extends BaseApi implements ParserApi {
 
     @Override
     public AvailableSlots getAvailable(String laundryId) {
+
         return getRequest(String.format("%s/%s/available", LAUNDRY_PATH, laundryId), null, AvailableSlots.class);
     }
 
